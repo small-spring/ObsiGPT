@@ -15,10 +15,10 @@ from dotenv import load_dotenv
 
 # --- 定数定義 ---
 PERSIST_DIR = "./storage"
-VAULT_PATH = "test-vault"
-EMBEDDING_MODEL = "text-embedding-3-small"
-LLM_MODEL = "gpt-4o-mini"
-
+VAULT_PATH = "./test-vault/"
+EMBEDDING_MODEL = "text-embedding-3-large"
+LLM_MODEL = "gpt-4o"
+N_SIMILARITY_TOP_K = 5
 # load_or_create_index 関数は変更なし (前のバージョンのままでOK)
 def load_or_create_index(persist_dir: str, vault_path: str, embed_model: OpenAIEmbedding, force_recreate: bool = False) -> VectorStoreIndex | None:
     """
@@ -77,7 +77,7 @@ def load_or_create_index(persist_dir: str, vault_path: str, embed_model: OpenAIE
     if should_create_index:
         try:
             print(f"'{vault_path}' からドキュメントを読み込み、新しいインデックスを作成します...")
-            documents = SimpleDirectoryReader(vault_path).load_data()
+            documents = SimpleDirectoryReader(vault_path, recursive=True).load_data()
             if not documents:
                 print(f"警告: '{vault_path}' 内に読み込めるドキュメントが見つかりませんでした。")
                 # ドキュメントがなくても空のインデックスは作成できる場合があるが、
@@ -177,7 +177,7 @@ def main():
         print("エラー: インデックスの準備に失敗しました。プログラムを終了します。")
         return
 
-    query_engine = index.as_query_engine(llm=llm)
+    query_engine = index.as_query_engine(llm=llm, similarity_top_k=N_SIMILARITY_TOP_K)
     run_chat_loop(query_engine)
 
 if __name__ == "__main__":

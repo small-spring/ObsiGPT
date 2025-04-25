@@ -33,6 +33,7 @@ Thumbs.db
 
 # Data source
 test-vault/*
+whole-vault/*
 
 # Except test file
 !test-vault/test_data.md
