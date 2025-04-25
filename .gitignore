@@ -1,0 +1,38 @@
+# Environment variables
+.env
+
+# Virtual environment
+.venv
+venv/
+env/
+
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Test artifacts
+.pytest_cache/
+htmlcov/
+.coverage
+
+# IDE/Editor specific files
+.vscode/
+.idea/
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Data source
+test-vault/*
+
+# Except test file
+!test-vault/test_data.md
